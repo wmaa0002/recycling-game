@@ -1,99 +1,117 @@
-<!DOCTYPE html>
-<head>
-    <meta charset="UTF-8" />
-    <title>Recycling-game</title>
-    <script src="js/phaser.js"></script>
-    <script src="js/menu.js"></script>
-    <script src="js/game.js"></script>
+<!DOCTYPE html> 
+<head> 
+	<meta charset="UTF-8" />
+	<title>Recycling game</title>
+  <script src="js/phaser.min.js"></script>
 </head>
 <body>
 
 <script>
 
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { preload: preload, create: create, update: update });
-
-game.state.add('Menu', Menu);
-
-game.state.start('Menu');
+var game = new Phaser.Game(640, 480, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update });
 
 function preload() {
-    game.load.image('sky', 'assets/sky.png');
-    game.load.image('ground', 'assets/platform.png');
-    game.load.image('star', 'assets/star.png');
-    game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+  game.load.image('background', 'assets/background1.png');
+  game.load.image('candy-red', 'assets/candy-red.png');
+  game.load.image('red-bin', 'assets/redbin.jpg');
+  game.load.image('green-bin', 'assets/bin-icon.png');
+
+  game.load.image('apple', 'assets/apple-icon.png');
+  game.load.image('water-bottle', 'assets/bottle-icon.png');
+  game.load.image('coke', 'assets/coke-can.png');
+  game.load.image('milk-box', 'assets/milk-can.png');
+  game.load.image('right-sign', 'assets/right.png');
+  // game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 }
 
-var platforms;
-var player;
-var cursors;
-var stars;
-var score = 0;
-var scoreText;
+
+var recyclingBin;
+// var generalBin;
+var apple;
+var waterBottle;
+var coke;
+var milkBox;
+var candyRed;
+var righSign;
+var text;
 
 function create() {
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.add.sprite(0, 0, 'sky');
-    platforms = game.add.group();
-    platforms.enableBody = true;
-    var ground = platforms.create(0, game.world.height - 64, 'ground');
-    ground.scale.setTo(2, 2);
-    ground.body.immovable = true;
-    var ledge = platforms.create(400, 400, 'ground');
-    ledge.body.immovable = true;
-    ledge = platforms.create(-150, 250, 'ground');
-    ledge.body.immovable = true;
+  game.physics.startSystem(Phaser.Physics.ARCADE)
 
-    player = game.add.sprite(32, game.world.height - 150, 'dude');
-    game.physics.arcade.enable(player);
-    player.body.bounce.y = 0.2;
-    player.body.gravity.y = 300;
-    player.body.collideWorldBounds = true;
-    player.animations.add('left', [0, 1, 2, 3], 10, true);
-    player.animations.add('right', [5, 6, 7, 8], 10, true);
+  game.add.sprite(0, 0, 'background');  
 
-    cursors = game.input.keyboard.createCursorKeys();
+  recyclingBin = game.add.sprite(300, 400, 'red-bin');
+  recyclingBin.anchor.set(0.5);
+  // 使用tween.from，它会从上面运用到中间
+  game.add.tween(recyclingBin).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);
+  game.physics.enable(recyclingBin, Phaser.Physics.ARCADE);
 
-    stars = game.add.group();
-    stars.enableBody = true;
-    for (var i = 0; i < 12; i++) {
-        var star = stars.create(i * 70, 0, 'star');
-        star.body.gravity.y = 300;
-        star.body.bounce.y = 0.7 + Math.random() * 0.2;
-    }
+  // generalBin = game.add.sprite(500, 400, 'green-bin');
+  // generalBin.anchor.set(0.5);
+  // game.add.tween(generalBin).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);
+  // game.physics.enable(generalBin, Phaser.Physics.ARCADE);
 
-    scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+
+  candyRed = game.add.sprite(300, 200, 'candy-red');
+  // 启动输入系统600
+  candyRed.inputEnabled = true;
+  // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
+  candyRed.input.enableDrag(true);
+  game.physics.enable(candyRed, Phaser.Physics.ARCADE);
+
+  apple = game.add.sprite(100, 200, 'apple');
+  // 启动输入系统600
+  apple.inputEnabled = true;
+  // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
+  apple.input.enableDrag(true);
+  game.physics.enable(apple, Phaser.Physics.ARCADE);
+
+  waterBottle = game.add.sprite(150, 200, 'water-bottle');
+  // 启动输入系统600
+  waterBottle.inputEnabled = true;
+  // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
+  waterBottle.input.enableDrag(true);
+  game.physics.enable(waterBottle, Phaser.Physics.ARCADE);
+
+  coke = game.add.sprite(300, 100, 'coke');
+  // 启动输入系统600
+  coke.inputEnabled = true;
+  // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
+  coke.input.enableDrag(true);
+  game.physics.enable(coke, Phaser.Physics.ARCADE);
+
+  milkBox = game.add.sprite(400, 200, 'milk-box');
+  // 启动输入系统600
+  milkBox.inputEnabled = true;
+  // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
+  milkBox.input.enableDrag(true);
+  game.physics.enable(milkBox, Phaser.Physics.ARCADE);
+
+  text = game.add.text(16, 16, 'drag the item', { fill: '#ffffff' });
 }
 
 function update() {
-    game.physics.arcade.collide(player, platforms);
-
-    game.physics.arcade.collide(stars, platforms);
-    game.physics.arcade.overlap(player, stars, collectStar, null, this);
-
-    player.body.velocity.x = 0;
-    if (cursors.left.isDown) {
-        player.body.velocity.x = -150;
-        player.animations.play('left');
-    } else if (cursors.right.isDown) {
-        player.body.velocity.x = 150;
-        player.animations.play('right');
+  if (checkOverlap(recyclingBin, waterBottle)) {
+    // candyRed.kill();
+    waterBottle.kill();
+    righSign = game.add.image(250, 250, 'right-sign')
     } else {
-        player.animations.stop();
-        player.frame = 4;
+        text.text = 'you are wrong';
     }
-
-    if (cursors.up.isDown && player.body.touching.down) {
-        player.body.velocity.y = -350;
-    }
+    
 }
 
-function collectStar (player, star) {
-    star.kill();
-
-    score += 10;
-    scoreText.text = 'Score: ' + score;
+function checkOverlap(spriteA, spriteB) {
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+    return Phaser.Rectangle.intersects(boundsA, boundsB);
 }
 
-</script>
 
+
+
+
+ </script>
 </body>
+
+</html>
