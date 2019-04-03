@@ -21,29 +21,30 @@ function preload() {
   game.load.image('coke', 'assets/coke-can.png');
   game.load.image('milk-box', 'assets/milk-can.png');
   game.load.image('right-sign', 'assets/right.png');
+  game.load.image('gameover', 'assets/game-over.png')
   // game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 }
 
 
-var recyclingBin;
+// var recyclingBin;
 // var generalBin;
-var apple;
-var waterBottle;
-var coke;
-var milkBox;
-var candyRed;
-var righSign;
-var text;
+// var apple;
+// var waterBottle;
+// var coke;
+// var milkBox;
+// var candyRed;
+// var rightSign;
+// var text;
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE)
-
+  this.palying = true;
   game.add.sprite(0, 0, 'background');  
 
-  recyclingBin = game.add.sprite(300, 400, 'red-bin');
+  recyclingBin = game.add.sprite(300, 400, 'green-bin');
   recyclingBin.anchor.set(0.5);
   // 使用tween.from，它会从上面运用到中间
-  game.add.tween(recyclingBin).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);
+  // game.add.tween(recyclingBin).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);
   game.physics.enable(recyclingBin, Phaser.Physics.ARCADE);
 
   // generalBin = game.add.sprite(500, 400, 'green-bin');
@@ -92,13 +93,26 @@ function create() {
 
 function update() {
   if (checkOverlap(recyclingBin, waterBottle)) {
-    // candyRed.kill();
     waterBottle.kill();
-    righSign = game.add.image(250, 250, 'right-sign')
-    } else {
-        text.text = 'you are wrong';
-    }
-    
+    showRightSign();
+    } 
+  if (checkOverlap(recyclingBin, candyRed )) {
+    candyRed.kill();
+    gameOverState();
+  }
+   
+}
+
+function showRightSign() {
+  rightSign = game.add.sprite(250, 250, 'right-sign')
+  // rightSign.anchor.setTo(0.5,0.5);
+  game.time.events.add(2000, fadePicture, this);
+}
+
+function fadePicture() {
+
+    game.add.tween(rightSign).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+
 }
 
 function checkOverlap(spriteA, spriteB) {
@@ -107,7 +121,20 @@ function checkOverlap(spriteA, spriteB) {
     return Phaser.Rectangle.intersects(boundsA, boundsB);
 }
 
+function gameOverState() {
+    this.playing = false;
+    var gameOverSprite = game.add.sprite(0, 0, 'gameover');
+    gameOverSprite.anchor.setTo(0.5, 0.5);
+    gameOverSprite.scale.setTo(0, 0);
+    gameOverSprite.reset(game.width/2, game.height/2);
+    game.add.tween(gameOverSprite.scale).to({x: 1.0, y: 1.0}, 300, Phaser.Easing.Sinusoidal.InOut, true);
+    // game.input.onUp.add(this.restartGame, this);
+  }
 
+
+// function restartGame() {
+//     game.state.start('main');
+//   }
 
 
 
