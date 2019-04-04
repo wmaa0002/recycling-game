@@ -1,5 +1,9 @@
 var GameScence = {
     create: function () {
+        score = 0;
+        var scoreStyle = { font: "bold 20px Arial", fill: "#FFFFFF", boundsAlignH: "center" };
+        var scoreSprite = game.add.sprite(10, 10);
+
         game.physics.startSystem(Phaser.Physics.ARCADE);
         CANDY = game.add.group(); 
         APPLE = game.add.group();
@@ -49,25 +53,27 @@ var GameScence = {
   
   //屏幕适配
         // game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-
-        text = game.add.text(16, 16, 'drag the item', { fill: '#ffffff' });
+        // scoreText = game.add.text(0, 20, this.score, scoreStyle);
+        scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+        // text = game.add.text(16, 16, 'drag the item', { fill: '#ffffff' });
 
     },
     
     update: function () {
         if (this.checkOverlap(recyclingBin, waterBottle)) {
             waterBottle.kill();
-            this.showRightSign();
+            this.scoreUp();
+            // this.showRightSign();
         } 
 
         if (this.checkOverlap(recyclingBin, milkBox )) {
             milkBox.kill();
-            this.showRightSign();
+            // this.showRightSign();
         }
 
         if (this.checkOverlap(recyclingBin, coke )) {
             coke.kill();
-            this.showRightSign();
+            // this.showRightSign();
         }
 
         if (this.checkOverlap(recyclingBin, candyRed )) {
@@ -85,15 +91,26 @@ var GameScence = {
             game.state.start('gameover');  
         }
     },   
-    showRightSign: function () {
-        rightSign = game.add.sprite(250, 260, 'right-sign');
-        game.time.events.add(1000, function(){game.add.tween(rightSign).to({alpha: 0}, 1000, Phaser.Easing.Linear.None, true);}, this);
+
+    scoreUp: function() {
+        score ++;
+        scoreText.text = 'Score: ' + score;
+        if(score > 1){
+            score = 1;
+        }
     },
 
-    fadePicture: function () {
-        game.add.tween(rightSign).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
-        // rightSign.kill();
-    },
+    // showRightSign: function () {
+    //     var rightSign = game.add.sprite(250, 260, 'right-sign');
+    //     rightSign.alpha = 1;
+    //     // game.time.events.add(1000, this.fadePicture, this);
+    //     game.time.events.add(1000, function(){game.add.tween(rightSign).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);}, this);
+    // },
+
+    // fadePicture: function () {
+    //     var fade = game.add.tween(rightSign).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+    //     fade.start();
+    // },
 
     checkOverlap: function (spriteA, spriteB) {
         var boundsA = spriteA.getBounds();
