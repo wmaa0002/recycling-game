@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!-- <!DOCTYPE html> 
 <head> 
 	<meta charset="UTF-8" />
 	<title>Recycling game</title>
@@ -20,6 +20,8 @@ function preload() {
   game.load.image('water-bottle', 'assets/bottle-icon.png');
   game.load.image('coke', 'assets/coke-can.png');
   game.load.image('milk-box', 'assets/milk-can.png');
+  game.load.image('pizza', 'assets/pizza.png');
+
   game.load.image('right-sign', 'assets/right.png');
   game.load.image('gameover', 'assets/game-over.png')
   // game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
@@ -33,12 +35,19 @@ function preload() {
 // var coke;
 // var milkBox;
 // var candyRed;
-// var rightSign;
+var rightSign;
 // var text;
-
+var CANDY; 
+var APPLE;
+var BOTTLE;
+var COKE;
 function create() {
-  game.physics.startSystem(Phaser.Physics.ARCADE)
-  this.palying = true;
+  game.physics.startSystem(Phaser.Physics.ARCADE);
+  CANDY = game.add.group(); 
+  APPLE = game.add.group();
+  BOTTLE = game.add.group();
+  COKE =  game.add.group();
+
   game.add.sprite(0, 0, 'background');  
 
   recyclingBin = game.add.sprite(300, 400, 'green-bin');
@@ -52,68 +61,89 @@ function create() {
   // game.add.tween(generalBin).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);
   // game.physics.enable(generalBin, Phaser.Physics.ARCADE);
 
-
-  candyRed = game.add.sprite(300, 200, 'candy-red');
-  // 启动输入系统600
+  candyRed = game.add.sprite(game.world.randomX, game.world.randomY, 'candy-red');
   candyRed.inputEnabled = true;
-  // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
-  candyRed.input.enableDrag(true);
-  game.physics.enable(candyRed, Phaser.Physics.ARCADE);
+  candyRed.input.enableDrag( true);
 
   apple = game.add.sprite(100, 200, 'apple');
-  // 启动输入系统600
   apple.inputEnabled = true;
-  // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
   apple.input.enableDrag(true);
-  game.physics.enable(apple, Phaser.Physics.ARCADE);
 
-  waterBottle = game.add.sprite(150, 200, 'water-bottle');
-  // 启动输入系统600
+  waterBottle = game.add.sprite(game.world.randomX, game.world.randomY, 'water-bottle');
   waterBottle.inputEnabled = true;
-  // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
   waterBottle.input.enableDrag(true);
-  game.physics.enable(waterBottle, Phaser.Physics.ARCADE);
 
   coke = game.add.sprite(300, 100, 'coke');
   // 启动输入系统600
   coke.inputEnabled = true;
   // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
   coke.input.enableDrag(true);
-  game.physics.enable(coke, Phaser.Physics.ARCADE);
-
+  
+  
   milkBox = game.add.sprite(400, 200, 'milk-box');
   // 启动输入系统600
   milkBox.inputEnabled = true;
   // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
   milkBox.input.enableDrag(true);
-  game.physics.enable(milkBox, Phaser.Physics.ARCADE);
+  
+
+  pizza = game.add.sprite(300, 200, 'pizza');
+  // 启动输入系统600
+  pizza.inputEnabled = true;
+  // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
+  pizza.input.enableDrag(true);
+  
+
+
+  //屏幕适配
+  game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
   text = game.add.text(16, 16, 'drag the item', { fill: '#ffffff' });
 }
 
 function update() {
+
   if (checkOverlap(recyclingBin, waterBottle)) {
     waterBottle.kill();
     showRightSign();
-    } 
+  } 
+
+  if (checkOverlap(recyclingBin, milkBox )) {
+    milkBox.kill();
+    showRightSign();
+  }
+
+  if (checkOverlap(recyclingBin, coke )) {
+    coke.kill();
+    showRightSign();
+  }
+
   if (checkOverlap(recyclingBin, candyRed )) {
     candyRed.kill();
     gameOverState();
   }
-   
+
+  if (checkOverlap(recyclingBin, apple )) {
+    apple.kill();
+    gameOverState();
+  }
+
+  if (checkOverlap(recyclingBin, pizza )) {
+    pizza.kill();
+    gameOverState();
+  }
 }
 
 function showRightSign() {
   rightSign = game.add.sprite(250, 250, 'right-sign')
-  // rightSign.anchor.setTo(0.5,0.5);
-  game.time.events.add(2000, fadePicture, this);
+  game.time.events.add(Phaser.Timer.SECOND, fadePicture, rightSign);
 }
 
 function fadePicture() {
-
-    game.add.tween(rightSign).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
-
+  // game.add.tween(rightSign).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+  rightSign.visible = false;
 }
+
 
 function checkOverlap(spriteA, spriteB) {
     var boundsA = spriteA.getBounds();
@@ -122,8 +152,7 @@ function checkOverlap(spriteA, spriteB) {
 }
 
 function gameOverState() {
-    this.playing = false;
-    var gameOverSprite = game.add.sprite(0, 0, 'gameover');
+    gameOverSprite = game.add.sprite(0, 0, 'gameover');
     gameOverSprite.anchor.setTo(0.5, 0.5);
     gameOverSprite.scale.setTo(0, 0);
     gameOverSprite.reset(game.width/2, game.height/2);
@@ -141,4 +170,25 @@ function gameOverState() {
  </script>
 </body>
 
-</html>
+</html> -->
+<!DOCTYPE html> 
+<head> 
+  <meta charset="UTF-8" />
+  <title>Recycling-Game</title>
+  <script src="js/phaser.min.js"></script>
+  <script src="js/boot.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/gameover.js"></script>
+  <script src="js/preload.js"></script>
+  <script src="js/flameParticle.js"></script> -->
+  <script src="js/main.js"></script>
+  
+  <style>
+    body {
+      margin: 0px;
+    }
+  </style>
+</head>
+<body>
+  <div id="game" class="game"></div>
+</body>
