@@ -8,16 +8,28 @@ var PreloadScene = {
     preloadSprite.anchor.set(0.5, 0.5);
     progressText = game.add.text(game.world.centerX -50, game.world.centerY + 70,'0%',{fill:'#fff',fontSize:'16px'});
     progressText.font = 'Arilas';
-    game.load.image('background', 'assets/background1.png');
+    game.load.image('background', 'assets/background3.png');
     game.load.image('candy-red', 'assets/candy-red.png');
-    game.load.image('red-bin', 'assets/redbin.jpg');
-    game.load.image('green-bin', 'assets/bin-icon.png');
+    game.load.image('red-bin', 'assets/bin.png');
+    // game.load.image('green-bin', 'assets/bin-icon.png');
 
     game.load.image('apple', 'assets/apple-icon.png');   
-    game.load.image('water-bottle', 'assets/bottle-icon.png');
-    game.load.image('coke', 'assets/coke-can.png');
-    game.load.image('milk-box', 'assets/milk-can.png');
+    game.load.image('bread', 'assets/bread.png');
     game.load.image('pizza', 'assets/pizza.png');
+    game.load.image('potato', 'assets/patato.png');
+    game.load.image('egg', 'assets/egg.png');
+    game.load.image('fishbone', 'assets/fishbone.png');
+    game.load.image('banana', 'assets/banana.png');
+
+
+
+    game.load.image('water-bottle', 'assets/plastic-bottle.png');
+    game.load.image('coke', 'assets/soda.png');
+    game.load.image('milk-box', 'assets/milk-can.png');
+    game.load.image('glass', 'assets/glass.png');
+    game.load.image('plastic-bag', 'assets/plastic-bag.png');
+    game.load.image('can', 'assets/can.png');
+    game.load.image('can1', 'assets/can1.png');
 
     game.load.image('right-sign', 'assets/right.png');
     game.load.image('gameover', 'assets/game-over.png')
