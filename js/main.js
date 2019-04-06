@@ -1,5 +1,5 @@
 
-var game = new Phaser.Game(1680, 1050, Phaser.CANVAS, 'game');
+var game = new Phaser.Game(1360, 768, Phaser.CANVAS, 'game');
 
 game.States = {};
 
@@ -18,6 +18,7 @@ game.States.preload = function() {
 game.States.game = function() {
   this.create = GameScence.create.bind(GameScence);
   this.update = GameScence.update.bind(GameScence);
+  // this.additems = GameScence.additems.bind(GameScence);
 }
 
 game.States.gameover = function() {
