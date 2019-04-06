@@ -4,12 +4,13 @@ var GameScence = {
         score = 0;
         var scoreStyle = { font: "bold 20px Arial", fill: "#FFFFFF", boundsAlignH: "center" };
         var scoreSprite = game.add.sprite(10, 10);
-        // var recyclableItems = [];
-        // var unrecyclableItems = [];
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        game.add.sprite(0, 0, 'background');
+        background = game.add.sprite(0, 0, 'background');
+        background.width = 1080;
+        background.height = 960;
+
 
         recyclable = game.add.group();//可回收的
         recyclable.enableBody = true; // 可触碰
@@ -137,7 +138,9 @@ var GameScence = {
         rightSign.visible = false;
   
   //屏幕适配
-        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        // game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
+
+        // game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         // scoreText = game.add.text(0, 20, this.score, scoreStyle);
         scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
         // text = game.add.text(16, 16, 'drag the item', { fill: '#ffffff' });
