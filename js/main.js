@@ -1,6 +1,6 @@
 
-var game = new Phaser.Game(1080, 960 ,Phaser.CANVAS, 'game');
-
+// var game = new Phaser.Game(1080, 960 ,Phaser.CANVAS, 'game');
+var game = new Phaser.Game(800, 600 ,Phaser.CANVAS, 'game');
 game.States = {};
 
 // boot场景
