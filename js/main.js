@@ -1,6 +1,9 @@
 
 // var game = new Phaser.Game(1080, 960 ,Phaser.CANVAS, 'game');
-var game = new Phaser.Game(800, 600 ,Phaser.CANVAS, 'game');
+// var game = new Phaser.Game(800, 600 ,Phaser.CANVAS, 'game');
+var game = new Phaser.Game(window.innerWidth, window.innerHeight,Phaser.CANVAS, 'game');
+
+
 game.States = {};
 
 // boot场景
@@ -14,13 +17,18 @@ game.States.preload = function() {
   this.preload = PreloadScene.preload;
   this.create = PreloadScene.create;
 }
-
-game.States.game = function() {
+// menu 
+game.States.menu = function() {
+  this.create = MainScene.create.bind(MainScene);
+  // this.update = MainScene.update.bind(MainScene);
+}
+// the main game
+game.States.play = function() {
   this.create = GameScence.create.bind(GameScence);
   this.update = GameScence.update.bind(GameScence);
   // this.additems = GameScence.additems.bind(GameScence);
 }
-
+// the game over 
 game.States.gameover = function() {
   this.create = GameOverScence.create.bind(GameOverScence);
   this.update = GameOverScence.update.bind(GameOverScence);
@@ -28,8 +36,8 @@ game.States.gameover = function() {
 
 game.state.add('boot', game.States.boot);
 game.state.add('preload', game.States.preload);
-// game.state.add('main', game.States.main);
-game.state.add('game', game.States.game);
+// game.state.add('menu', game.States.menu);
+game.state.add('play', game.States.play);
 game.state.add('gameover', game.States.gameover);
 
 

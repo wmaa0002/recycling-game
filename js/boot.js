@@ -8,4 +8,4 @@ var BootScene = {
   create: function() {
     game.state.start('preload');
   }
-}
+};
