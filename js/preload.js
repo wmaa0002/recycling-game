@@ -19,7 +19,7 @@ var PreloadScene = {
     game.load.image('restartbtn','assets/1112.png');
     // game.load.spritesheet('restartbtn', 'assets/button-restart.png',399,141,3);
     game.load.spritesheet('startbtn', 'assets/button-start.png',399,141,3);
-    game.load.image('tipsbtn','assets/idea.png')
+    game.load.image('tipsbtn','assets/idea.png');
 
     game.load.image('candy-red', 'assets/candy-red.png');
     game.load.image('red-bin', 'assets/recycle-bin.png');
@@ -30,7 +30,7 @@ var PreloadScene = {
     game.load.image('apple', 'assets/apple-icon.png');   
     game.load.image('bread', 'assets/bread.png');
     game.load.image('pizza', 'assets/pizza1.png');
-    game.load.image('potato', 'assets/patato.png');
+    game.load.image('potato', 'assets/patato1.png');
     game.load.image('egg', 'assets/egg1.png');
     game.load.image('fishbone', 'assets/fishbone1.png');
     game.load.image('banana', 'assets/banana1.png');
@@ -48,6 +48,7 @@ var PreloadScene = {
     game.load.image('can1', 'assets/can1-1.png');
     game.load.image('can2', 'assets/Trash_SodaCans.png');
     game.load.image('tunaCan', 'assets/tuna2.png');
+    game.load.image('milk-bottle','assets/milk1.png');
 
     game.load.image('right-sign', 'assets/right.png');
 

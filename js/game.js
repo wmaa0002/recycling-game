@@ -69,6 +69,7 @@ var GameScence = {
         // 使用tween.from，它会从上面运用到中间
         // game.add.tween(recyclingBin).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);
         game.physics.enable(recyclingBin, Phaser.Physics.ARCADE);
+        game.physics.enable(generalBin, Phaser.Physics.ARCADE);
 
 
         candyRed = game.add.sprite(0, 0, 'candy-red');
@@ -119,8 +120,8 @@ var GameScence = {
         laptop.inputEnabled = true;
         laptop.input.enableDrag(true);
 
-        apple.visible = egg.visible = pizza.visible = fishBone.visible = banana.visible = candyRed.visible = plasticBag.visible = laptop.visible = false;//默认不可见的
-        apple.alive = egg.alive = pizza.alive = fishBone.alive = banana.alive =  candyRed.alive =  plasticBag.alive = laptop.alive = false;//默认状态是dead
+        apple.visible = egg.visible = pizza.visible = fishBone.visible = banana.visible = candyRed.visible = plasticBag.visible = laptop.visible = potato.visible = false;//默认不可见的
+        apple.alive = egg.alive = pizza.alive = fishBone.alive = banana.alive =  candyRed.alive =  plasticBag.alive = laptop.alive = potato.alive= false;//默认状态是dead
         unrecyclable.add(apple);
         unrecyclable.add(egg);
         unrecyclable.add(pizza);
@@ -129,11 +130,16 @@ var GameScence = {
         unrecyclable.add(candyRed);
         unrecyclable.add(plasticBag);
         unrecyclable.add(laptop);
+        unrecyclable.add(potato);
 
 
         tunaCan = game.add.sprite(0, 0, 'tunaCan');
         tunaCan.inputEnabled = true;
         tunaCan.input.enableDrag(true);
+
+        milkBottle = game.add.sprite(0, 0, 'milk-bottle');
+        milkBottle.inputEnabled = true;
+        milkBottle.input.enableDrag(true);
 
         waterBottle = game.add.sprite(0, 0, 'water-bottle');
         waterBottle.inputEnabled = true;
@@ -173,8 +179,8 @@ var GameScence = {
   // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
         milkBox.input.enableDrag(true);
         
-        waterBottle.visible = can.visible = canOne.visible = glass.visible = coke.visible = milkBox.visible = tunaCan.visible = canTwo.visible = false;//默认不可见的
-        waterBottle.alive = can.alive = canOne.alive = glass.alive = coke.alive = milkBox.alive = tunaCan.alive = canTwo.alive = false;//默认状态是dead
+        waterBottle.visible = can.visible = canOne.visible = glass.visible = coke.visible = milkBox.visible = tunaCan.visible = canTwo.visible = milkBottle.visible = false;//默认不可见的
+        waterBottle.alive = can.alive = canOne.alive = glass.alive = coke.alive = milkBox.alive = tunaCan.alive = canTwo.alive =  milkBottle.alive = false;//默认状态是dead
 
         recyclable.add(waterBottle);
 
@@ -185,6 +191,7 @@ var GameScence = {
         recyclable.add(coke);
         recyclable.add(milkBox);
         recyclable.add(tunaCan);
+        recyclable.add(milkBottle);
 
         var recyclableItems;
 
@@ -235,20 +242,31 @@ var GameScence = {
     var item1 = unrecyclable.getRandom();
     if(item.alive == true) { // 本身是dead的，现在如果是活得
       // recyclable.forEachAlive(function(){this.kill();},this);
+      //如果可回收的进了general的话，就游戏结束。
+      // item.events.onDragStop.add(function(){game.physics.arcade.overlap(item,generalBin,function(){item.kill();game.state.start('gameover');},null,this);}, this);
       if (item1.alive == false){
         item1.reset(position, dropOffset[itemType]);
         // item1.reset(position);
+        //如果不可回收的item进了recycle bin就kill他们，并结束游戏。
         item1.events.onDragStop.add(function(){game.physics.arcade.overlap(item1,recyclingBin,function(){item1.kill();game.state.start('gameover');},null,this);}, this);
-    } else {
+        //如果不可回收的item进了general bin就加分。
+        item1.events.onDragStop.add(function(){game.physics.arcade.overlap(item1,generalBin,function(){item1.kill();score += 1;
+        scoreText.text = 'Score: ' + score;},null,this);}, this);
+        } else {
+        //如果不可回收的item进了recycle bin就kill他们，并结束游戏。
         item1.events.onDragStop.add(function(){game.physics.arcade.overlap(item1,recyclingBin,function(){item1.kill();game.state.start('gameover');},null,this);}, this);
-    }
-    
+         //如果不可回收的item进了general bin就加分。
+        item1.events.onDragStop.add(function(){game.physics.arcade.overlap(item1,generalBin,function(){item1.kill();score += 1;
+        scoreText.text = 'Score: ' + score;},null,this);}, this);
+        }  
     } else {
         item.reset(position, dropOffset[itemType]);
         // item.reset(position);
         // item.events.onDragStop.add(function(){game.physics.arcade.overlap(item,recyclingBin,this.scoreUp,null,this);}, this);
         item.events.onDragStop.add(function(){game.physics.arcade.overlap(item,recyclingBin,function(){item.kill();score += 1;
         scoreText.text = 'Score: ' + score;},null,this);}, this);
+        //如果可回收的进了general的话，就游戏结束。
+        item.events.onDragStop.add(function(){game.physics.arcade.overlap(item,generalBin,function(){item.kill();game.state.start('gameover');},null,this);}, this);
     }
     },
     // when the score higher than 40, stop the game and appear the text.
