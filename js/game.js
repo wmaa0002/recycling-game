@@ -26,6 +26,14 @@ var GameScence = {
         // kangaroo.anchor.set(0.9);
         // the pause button
         pauseBtn = game.add.button(10, 70, 'btn',this.managePause,this);
+
+        restartBtn = game.add.button(game.width/2+50, game.height/2+220,'restartbtn',this.Restart,this)
+        restartBtn.scale.setTo(0.2);
+        restartBtn.visible = false;
+
+        tipsBtn = game.add.button(game.width/2-200, game.height/2+200,'tipsbtn',this.Tips,this)
+        tipsBtn.scale.setTo(1);
+        tipsBtn.visible = false;
         // the continue button
         // continueButtn =  game.add.button(300, 200, 'conbtn', function(){
         //     game.paused = false;
@@ -116,12 +124,66 @@ var GameScence = {
         plasticBag.inputEnabled = true;
         plasticBag.input.enableDrag(true);
 
-        laptop = game.add.sprite(0, 0, 'laptop');
-        laptop.inputEnabled = true;
-        laptop.input.enableDrag(true);
+        ball = game.add.sprite(0, 0, 'ball');
+        ball.inputEnabled = true;
+        ball.input.enableDrag(true);
 
-        apple.visible = egg.visible = pizza.visible = fishBone.visible = banana.visible = candyRed.visible = plasticBag.visible = laptop.visible = potato.visible = false;//默认不可见的
-        apple.alive = egg.alive = pizza.alive = fishBone.alive = banana.alive =  candyRed.alive =  plasticBag.alive = laptop.alive = potato.alive= false;//默认状态是dead
+        clothes = game.add.sprite(0, 0, 'clothes');
+        clothes.inputEnabled = true;
+        clothes.input.enableDrag(true);
+
+        light = game.add.sprite(0, 0, 'light');
+        light.inputEnabled = true;
+        light.input.enableDrag(true);
+
+        mirror = game.add.sprite(0, 0, 'mirror');
+        mirror.inputEnabled = true;
+        mirror.input.enableDrag(true);
+
+        nappies = game.add.sprite(0, 0, 'nappies');
+        nappies.inputEnabled = true;
+        nappies.input.enableDrag(true);
+
+        over = game.add.sprite(0, 0, 'over');
+        over.inputEnabled = true;
+        over.input.enableDrag(true);
+
+        pant = game.add.sprite(0, 0, 'pant');
+        pant.inputEnabled = true;
+        pant.input.enableDrag(true);
+
+        plasticPaper = game.add.sprite(0, 0, 'plasticPaper');
+        plasticPaper.inputEnabled = true;
+        plasticPaper.input.enableDrag(true);
+
+        rockingHorse = game.add.sprite(0, 0, 'rocking-horse');
+        rockingHorse.inputEnabled = true;
+        rockingHorse.input.enableDrag(true);
+
+        rubiksCube = game.add.sprite(0, 0, 'rubiks-cube');
+        rubiksCube.inputEnabled = true;
+        rubiksCube.input.enableDrag(true);
+
+        shoes = game.add.sprite(0, 0, 'shoes');
+        shoes.inputEnabled = true;
+        shoes.input.enableDrag(true);
+
+        watermelon = game.add.sprite(0, 0, 'watermelon');
+        watermelon.inputEnabled = true;
+        watermelon.input.enableDrag(true);
+        // laptop = game.add.sprite(0, 0, 'laptop');
+        // laptop.inputEnabled = true;
+        // laptop.input.enableDrag(true);
+
+        apple.visible = egg.visible = pizza.visible = fishBone.visible = banana.visible = candyRed.visible = plasticBag.visible = potato.visible = false;//默认不可见的
+        apple.alive = egg.alive = pizza.alive = fishBone.alive = banana.alive =  candyRed.alive =  plasticBag.alive =  potato.alive= false;//默认状态是dead
+        
+        ball.visible = clothes.visible = light.visible = mirror.visible = nappies.visible = over.visible = pant.visible = false;
+        ball.alive = clothes.alive = light.alive = mirror.alive = nappies.alive = over.alive = pant.alive=false;
+
+        plasticPaper.visible = rockingHorse.visible = rubiksCube.visible =shoes.visible = watermelon.visible =false;
+        plasticPaper.alive = rockingHorse.alive = rubiksCube.alive = shoes.alive = watermelon.alive =false;
+
         unrecyclable.add(apple);
         unrecyclable.add(egg);
         unrecyclable.add(pizza);
@@ -129,9 +191,20 @@ var GameScence = {
         unrecyclable.add(banana);
         unrecyclable.add(candyRed);
         unrecyclable.add(plasticBag);
-        unrecyclable.add(laptop);
+        // unrecyclable.add(laptop);
         unrecyclable.add(potato);
-
+        unrecyclable.add(ball);
+        unrecyclable.add(clothes);
+        unrecyclable.add(light);
+        unrecyclable.add(mirror);
+        unrecyclable.add(nappies);
+        unrecyclable.add(over);
+        unrecyclable.add(pant);
+        unrecyclable.add(plasticPaper);
+        unrecyclable.add(rockingHorse);
+        unrecyclable.add(rubiksCube);
+        unrecyclable.add(shoes);
+        unrecyclable.add(watermelon);
 
         tunaCan = game.add.sprite(0, 0, 'tunaCan');
         tunaCan.inputEnabled = true;
@@ -145,13 +218,13 @@ var GameScence = {
         waterBottle.inputEnabled = true;
         waterBottle.input.enableDrag(true);
 
-        can = game.add.sprite(0, 0, 'can');
-        can.inputEnabled = true;
-        can.input.enableDrag(true);
+        // can = game.add.sprite(0, 0, 'can');
+        // can.inputEnabled = true;
+        // can.input.enableDrag(true);
 
-        canOne = game.add.sprite(0, 0, 'can1');
-        canOne.inputEnabled = true;
-        canOne.input.enableDrag(true);
+        // canOne = game.add.sprite(0, 0, 'can1');
+        // canOne.inputEnabled = true;
+        // canOne.input.enableDrag(true);
 
         canTwo = game.add.sprite(0,0, 'can2');
         canTwo.inputEnabled = true;
@@ -161,14 +234,14 @@ var GameScence = {
         glass.inputEnabled = true;
         glass.input.enableDrag(true);
 
-        coke = game.add.sprite(0, 0, 'coke-can');
-        // coke.width = 100;
-        // coke.height = 100;
-        // coke.scale.setTo(1,1);
-        // 启动输入系统600
-        coke.inputEnabled = true;
-        // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
-        coke.input.enableDrag(true);
+        // coke = game.add.sprite(0, 0, 'coke-can');
+        // // coke.width = 100;
+        // // coke.height = 100;
+        // // coke.scale.setTo(1,1);
+        // // 启动输入系统600
+        // coke.inputEnabled = true;
+        // // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
+        // coke.input.enableDrag(true);
   
   
         milkBox = game.add.sprite(0, 0, 'milk-box');
@@ -178,20 +251,103 @@ var GameScence = {
         milkBox.inputEnabled = true;
   // 允许拖拽，第一个参数true代表拖拽的时候鼠标位于精灵中心
         milkBox.input.enableDrag(true);
+
+        trays = game.add.sprite(0, 0, 'trays');
+        trays.inputEnabled = true;
+        trays.input.enableDrag(true);
+
+        babyformula = game.add.sprite(0, 0, 'babyformula');
+        babyformula.inputEnabled = true;
+        babyformula.input.enableDrag(true);
+
+        cereal = game.add.sprite(0, 0, 'cereal');
+        cereal.inputEnabled = true;
+        cereal.input.enableDrag(true);
+
+        conditioner = game.add.sprite(0, 0, 'conditioner');
+        conditioner.inputEnabled = true;
+        conditioner.input.enableDrag(true);
         
-        waterBottle.visible = can.visible = canOne.visible = glass.visible = coke.visible = milkBox.visible = tunaCan.visible = canTwo.visible = milkBottle.visible = false;//默认不可见的
-        waterBottle.alive = can.alive = canOne.alive = glass.alive = coke.alive = milkBox.alive = tunaCan.alive = canTwo.alive =  milkBottle.alive = false;//默认状态是dead
+        juice = game.add.sprite(0, 0, 'juice');
+        juice.inputEnabled = true;
+        juice.input.enableDrag(true);
+
+        juiceBox = game.add.sprite(0, 0, 'juiceBox');
+        juiceBox.inputEnabled = true;
+        juiceBox.input.enableDrag(true);
+
+        mail = game.add.sprite(0, 0, 'mail');
+        mail.inputEnabled = true;
+        mail.input.enableDrag(true);
+
+        newspaper = game.add.sprite(0, 0, 'newspaper');
+        newspaper.inputEnabled = true;
+        newspaper.input.enableDrag(true);
+
+        notebook = game.add.sprite(0, 0, 'notebook');
+        notebook.inputEnabled = true;
+        notebook.input.enableDrag(true);
+
+        paper = game.add.sprite(0, 0, 'paper');
+        paper.inputEnabled = true;
+        paper.input.enableDrag(true);
+
+        petfood = game.add.sprite(0, 0, 'petfood');
+        petfood.inputEnabled = true;
+        petfood.input.enableDrag(true);
+
+        pizzabox = game.add.sprite(0, 0, 'pizzabox');
+        pizzabox.inputEnabled = true;
+        pizzabox.input.enableDrag(true);
+
+        punnet = game.add.sprite(0, 0, 'punnet');
+        punnet.inputEnabled = true;
+        punnet.input.enableDrag(true);
+
+        spray = game.add.sprite(0, 0, 'spray');
+        spray.inputEnabled = true;
+        spray.input.enableDrag(true);
+
+        yoghurt = game.add.sprite(0, 0, 'yoghurt');
+        yoghurt.inputEnabled = true;
+        yoghurt.input.enableDrag(true);
+
+        waterBottle.visible = glass.visible = milkBox.visible = tunaCan.visible = canTwo.visible = milkBottle.visible = false;//默认不可见的
+        waterBottle.alive = glass.alive = milkBox.alive = tunaCan.alive = canTwo.alive =  milkBottle.alive = false;//默认状态是dead
+
+        trays.visible = babyformula.visible = cereal.visible = conditioner.visible = juice.visible = juiceBox.visible =false;
+        trays.alive = babyformula.alive = cereal.alive =  conditioner.alive = juice.alive = juiceBox.alive = false;
+
+        mail.visible = newspaper.visible = notebook.visible = paper.visible = petfood.visible = pizzabox.visible = punnet.visible = false;
+        mail.alive = newspaper.alive = notebook.alive = paper.alive = petfood.alive = pizzabox.alive = punnet.alive = false;
+
+        spray.visible = yoghurt.visible = false;
+        spray.alive = yoghurt.alive = false;
+        // placticBox.visible = false;
+        // placticBox.alive = false;
 
         recyclable.add(waterBottle);
-
-        recyclable.add(can);
-        recyclable.add(canOne);
         recyclable.add(canTwo);
         recyclable.add(glass);
-        recyclable.add(coke);
         recyclable.add(milkBox);
         recyclable.add(tunaCan);
+        recyclable.add(trays);
         recyclable.add(milkBottle);
+        recyclable.add(babyformula);
+        recyclable.add(cereal);
+        recyclable.add(conditioner);
+        recyclable.add(juice);
+        recyclable.add(juiceBox);
+        recyclable.add(mail);
+        recyclable.add(newspaper);
+        recyclable.add(notebook);
+        recyclable.add(paper);
+        recyclable.add(petfood);
+        recyclable.add(pizzabox);
+        // recyclable.add(punnet);
+        recyclable.add(spray);
+        recyclable.add(yoghurt);
+
 
         var recyclableItems;
 
@@ -203,21 +359,26 @@ var GameScence = {
         // game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         // scoreText = game.add.text(0, 20, this.score, scoreStyle);
         scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
-        CongratulationsText = game.add.text(game.width/2, game.height/2, '', { font: "40px Arial", fill: "#FFCC00", stroke: "#333", strokeThickness: 5, align: "center" });
+        CongratulationsText = game.add.text(game.width/2, game.height/2+150, '', { font: "40px Arial", fill: "#FFCC00", stroke: "#333", strokeThickness: 5, align: "center" });
         fontStyle = { font: "40px Arial", fill: "#FFCC00", stroke: "#333", strokeThickness: 5, align: "center" };
         // stateText = game.add.text(game.width/2, game.height/2-100, ' ', { font: "65px Arial", fill: "#ffffff", stroke: "#333", strokeThickness: 5, align: "center" });
         // stateText.visible = false;
         // stateText.text = " Oops, it seems like \n the non-recyclable item was \n put into the bin!";
-
+        congratulations = game.add.sprite(game.width/2, game.height/2-60, 'congratulations');
+        congratulations.anchor.setTo(0.5, 0.5);
+        congratulations.visible = false;
         // CongratulationText.visible = false;
         // text = game.add.text(16, 16, 'drag the item', { fill: '#ffffff' });
+        tips = game.add.sprite(game.width/2, game.height/2-100,'tips');
+        tips.anchor.setTo(0.5, 0.5);
+        tips.visible = false;
 
     },
     
     update: function () {
         spawnItemTimer += game.time.elapsed;
         // if spawn timer reach one second (1000 miliseconds)
-        if(spawnItemTimer > 1500) {
+        if(spawnItemTimer > 2500) {
             // reset it
             spawnItemTimer = 0;
             // and spawn new candy
@@ -271,13 +432,19 @@ var GameScence = {
     },
     // when the score higher than 40, stop the game and appear the text.
     successGame: function(){
-        if (score >= 40 ){
-            CongratulationsText.text = "Congratulations!!! \n You have successfully \n sorted all recyclable \n Click to restart";
+        if (score >= 60 ){
+            game.paused = true;
+            // restartBtn.visible = true;
+        
+            congratulations.visible = true;
+            // CongratulationsText.text = "Congratulations!!! \n You have successfully \n sorted all recyclable \n Click to restart";
+            CongratulationsText.text = "You finish the game \n Click to restart";
             CongratulationsText.anchor.setTo(0.5, 0.5);
             CongratulationsText.visible = true;
             game.input.onTap.addOnce(function () {
-            game.state.start('play');});
-             }
+            game.paused = false;
+            game.state.start('play');},this);
+        }
     },
     // randomNum: function(Min,Max){
     //         var Range = Max - Min;
@@ -292,6 +459,7 @@ var GameScence = {
         // game.stage.backgroundColor = '#337799';
 
     },
+
     managePause: function(){
     // pause the game
     game.paused = true;

@@ -33,9 +33,15 @@ game.States.gameover = function() {
   this.create = GameOverScence.create.bind(GameOverScence);
   this.update = GameOverScence.update.bind(GameOverScence);
 }
+//the 
+// game.States.Congratulations = function() {
+//   this.create = GameOverScence.create.bind(CongratulationsScence);
+//   this.update = GameOverScence.update.bind(CongratulationsScence);
+// }
 
 game.state.add('boot', game.States.boot);
 game.state.add('preload', game.States.preload);
+// game.state.add('congratulations',game.States.Congratulations);
 // game.state.add('menu', game.States.menu);
 game.state.add('play', game.States.play);
 game.state.add('gameover', game.States.gameover);

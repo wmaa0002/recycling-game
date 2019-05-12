@@ -1,4 +1,4 @@
-var CongrationScence = {
+var CongratulationsScence = {
     create: function () {
         game.stage.backgroundColor = '#6688ee'
         // background = game.add.sprite(0, 0, 'background');
